@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ms-auth-db-pv
+  namespace: company-mss
+spec:
+  capacity:
+    storage: "8Gi"
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-hostpath-storage
+  hostPath:
+    path: /mnt/wsl/nats-pv
+    type: DirectoryOrCreate

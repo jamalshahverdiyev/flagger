@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-auth
+  namespace: company-mss
+  labels:
+    app: ms-auth
+spec:
+  selector:
+    matchLabels:
+      app: ms-auth
+  template:
+    metadata:
+      labels:
+        app: ms-auth
+    spec:
+      imagePullSecrets:
+       - name: gitlabregistry
+      containers:
+      - name: ms-auth
+        image: registry.gitlab.com/jamal.shahverdiev/flagger:0.0.3
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: DB
+          value: ms-auth-db
+        - name: VERSION
+          value: "0.0.3"
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /demo/hello?health=true
+            port: 8080
+        readinessProbe:
+          httpGet:
+            path: /demo/hello?health=true
+            port: 8080
+        resources:
+            limits:
+              cpu: 100m
+              memory: 256Mi
+            requests:
+              cpu: 50m
+              memory: 128Mi
