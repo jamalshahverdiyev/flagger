@@ -38,7 +38,7 @@ $ watch -n1 'kubectl get svc,pods,deployments -n company-mss --no-headers'
 $ kubectl logs -f $(kubectl get pods -n istio-system| grep flagger-loadtester | awk '{ print $1 }') -n istio-system
 ```
 
-#### Coninside of some container and execute curl:
+#### Inside of some container execute curl:
 ```bash
 $ kubectl exec -it $(kubectl get pods | grep api-gateway) -c api-gateway -- sh
 $ apk update && apk add curl
